@@ -1,5 +1,5 @@
-import Projectile from './projectile.js';
-import Gun from './weapon/gun.js';
+import Projectile from '../projectile/Projectile.js';
+import RangedWeapon from '../weapon/RangedWeapon.js';
 
 class Player {
   constructor(game) {
@@ -30,7 +30,7 @@ class Player {
     this.game = game;
 
     // weapon - player's weapon
-    this.weapon = new Gun(15, 60, 15);
+    this.weapon = new RangedWeapon(10, 10);
   }
 
   fireProjectile(projectiles) {

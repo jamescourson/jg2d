@@ -1,9 +1,9 @@
-import Player from './obj/player/player.js';
+import Player from './obj/player/Player.js';
 
 class Game {
-  constructor(width, height, canvas, ctx) {
-    this.canvas = canvas;
-    this.ctx = ctx;
+  constructor(width, height) {
+    this.canvas = document.querySelector('#canvas');
+    this.ctx = this.canvas.getContext('2d');
 
     this.canvas.width = width;
     this.canvas.height = height;
@@ -53,8 +53,10 @@ class Game {
     // Clear canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    // Update projectiles
     this.handleProjectiles();
 
+    // Update and draw entities
     this.getEntities().forEach(e => {
       e.forEach(e_ => {
         e_.update();
