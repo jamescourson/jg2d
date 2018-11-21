@@ -1,4 +1,5 @@
-import Player from './obj/player/Player.js';
+import Player from './entity/player/Player.js';
+import Timer from './utility/Timer.js';
 
 class Game {
   constructor(width, height) {
@@ -19,8 +20,10 @@ class Game {
     ];
 
     this.running = false;
-
+    
     this.fps = 60;
+    
+    this.timer = new Timer(this);
   }
 
   toggleRunState() {
@@ -57,6 +60,11 @@ class Game {
         }
       }
     });
+  }
+
+  start() {
+    requestAnimationFrame(this.start.bind(this));
+    this.timer.update();
   }
 
   update() {
