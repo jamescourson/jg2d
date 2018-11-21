@@ -11,10 +11,20 @@ class Game {
     this.projectiles = [];
     this.structures = [];
     this.players = [];
+    
+    this.entities = [
+      this.projectiles,
+      this.structures,
+      this.players
+    ];
 
     this.running = false;
 
     this.fps = 60;
+  }
+
+  toggleRunState() {
+    this.running = !this.running;
   }
 
   addPlayer() {
@@ -57,24 +67,12 @@ class Game {
     this.handleProjectiles();
 
     // Update and draw entities
-    this.getEntities().forEach(e => {
+    this.entities.forEach(e => {
       e.forEach(e_ => {
         e_.update();
         e_.draw(this.ctx);
       });
     });
-  }
-
-  draw() {
-
-  }
-
-  getEntities() {
-    return [
-      this.players,
-      this.projectiles,
-      this.structures
-    ]
   }
 }
 
