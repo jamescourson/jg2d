@@ -8,8 +8,8 @@ class Projectile {
     this.y = player.y;
 
     // width, height - projectile's dimensions
-    this.width = 5;
-    this.height = 15;
+    this.width = 15;
+    this.height = 5;
 
     // angle - the projectile's direction
     this.angle = player.angle;
@@ -31,11 +31,11 @@ class Projectile {
     this.y += this.dy;
 
     // Collision + bounce
-    if (this.x < 0 || this.x > this.game.canvas.width - this.width) {
+    if (this.x < 0 || this.x > this.game.width - this.width) {
       this.angle = 180 - this.angle;
     }
 
-    if (this.y < 0 || this.y > this.game.canvas.height - this.height) {
+    if (this.y < 0 || this.y > this.game.height - this.height) {
       this.angle = 360 - this.angle;
     }
   }
@@ -45,7 +45,7 @@ class Projectile {
 
     ctx.translate(this.x, this.y);
     ctx.rotate(toRadians(this.angle));
-    ctx.fillRect(-this.width / 2, -this.height / this.width, this.height, 3);
+    ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
 
     ctx.restore();
   }

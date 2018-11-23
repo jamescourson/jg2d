@@ -2,7 +2,7 @@ import Projectile from '../projectile/Projectile.js';
 import RangedWeapon from '../weapon/RangedWeapon.js';
 
 class Player {
-  constructor(game) {
+  constructor(x, y, game) {
     // angle - player's direction in deg
     this.angle = 0;
 
@@ -19,8 +19,8 @@ class Player {
     this.turnDir = 0;
 
     // x, y - player's coordinates
-    this.x = 300;
-    this.y = 200;
+    this.x = x;
+    this.y = y;
 
     // dx, dy - player's x/y velocities
     this.dx = 0;

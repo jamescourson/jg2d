@@ -1,10 +1,14 @@
 import Player from './entity/player/Player.js';
 import Timer from './utility/Timer.js';
+import Structure from './entity/structure/Structure.js';
 
 class Game {
   constructor(width, height) {
     this.canvas = document.querySelector('#canvas');
     this.ctx = this.canvas.getContext('2d');
+
+    this.width = width;
+    this.height = height;
 
     this.canvas.width = width;
     this.canvas.height = height;
@@ -30,10 +34,14 @@ class Game {
     this.running = !this.running;
   }
 
-  addPlayer() {
-    let newPlayer = new Player(this);
+  addPlayer(x, y) {
+    let newPlayer = new Player(x, y, this);
     this.players.push(newPlayer);
     return newPlayer;
+  }
+
+  addStructure(x, y, width, height) {
+    this.structures.push(new Structure(x, y, width, height));
   }
 
   handleProjectiles() {
@@ -77,8 +85,12 @@ class Game {
     // Update and draw entities
     this.entities.forEach(e => {
       e.forEach(e_ => {
-        e_.update();
-        e_.draw(this.ctx);
+        if (e_.update) {
+          e_.update();
+        }
+        if (e_.draw) {
+          e_.draw(this.ctx);
+        }
       });
     });
   }

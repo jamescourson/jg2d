@@ -15,13 +15,13 @@ class Timer {
       this.then = this.now - (this.delta % this.interval);
       
       if (this.game.running) {
-        this.tick();
+        this.game.update();
+        
+        if (this.tick) {
+          this.tick();
+        }
       }
     }
-  }
-
-  tick() {
-    this.game.update();
   }
 }
 

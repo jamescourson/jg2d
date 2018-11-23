@@ -1,11 +1,13 @@
+import Sprite from "../sprite/Sprite.js";
+
 class Entity {
   constructor(x, y) {
     this.x = x;
     this.y = y;
   }
 
-  addSprite(src) {
-    this.sprite = src;
+  addSprite(width, height, src = false) {
+    this.sprite = new Sprite(this, width, height, src);
   }
 }
 
