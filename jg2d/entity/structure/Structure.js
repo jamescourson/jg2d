@@ -6,6 +6,8 @@ class Structure extends Entity {
 
     this.width = width;
     this.height = height;
+
+    this.rect = this.addRect(this.x, this.y, width, height);
   }
 
   draw(ctx) {

@@ -1,8 +1,10 @@
-import Projectile from '../projectile/Projectile.js';
-import RangedWeapon from '../weapon/RangedWeapon.js';
+import RangedWeapon from '../weapon/ranged/RangedWeapon.js';
+import Entity from '../Entity.js';
 
-class Player {
+class Player extends Entity {
   constructor(x, y, game) {
+    super(x, y);
+
     // angle - player's direction in deg
     this.angle = 0;
 
@@ -18,23 +20,11 @@ class Player {
     // turnDir - the direction the player is turning
     this.turnDir = 0;
 
-    // x, y - player's coordinates
-    this.x = x;
-    this.y = y;
-
-    // dx, dy - player's x/y velocities
-    this.dx = 0;
-    this.dy = 0;
-
     // game - parent game
     this.game = game;
 
     // weapon - player's weapon
-    this.weapon = new RangedWeapon(10, 10);
-  }
-
-  fireProjectile(projectiles) {
-    projectiles.push(new Projectile(this, this.game));
+    this.weapon = new RangedWeapon(this, 10, 10);
   }
 
   update() {

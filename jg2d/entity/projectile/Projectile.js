@@ -1,43 +1,65 @@
-class Projectile {
+import Entity from "../Entity.js";
+import Rect from "../../obj/Rect.js";
+
+class Projectile extends Entity {
   constructor(player, game) {
+    super(player.x, player.y);
+
     this.player = player;
     this.game = game;
 
-    // x, y - projectile's coordinates
-    this.x = player.x;
-    this.y = player.y;
-
-    // width, height - projectile's dimensions
     this.width = 15;
     this.height = 5;
 
+    this.rect = this.addRect(this.x, this.y, this.width, this.height);
+
     // angle - the projectile's direction
     this.angle = player.angle;
-
-    // dx, dy - projectile's x/y velocities
-    this.dx = 0;
-    this.dy = 0;
 
     // speed - projectile's speed
     this.speed = player.weapon.shotSpeed;
   }
 
+  handleCollision(axis) {
+    if (axis == 'x') {
+      this.angle = 180 - this.angle;
+    }
+    else {
+      this.angle = 360 - this.angle;
+    }
+  }
+
   update() {
-    // Move
+    // Calculate displacement
     this.dx = this.speed * Math.cos(toRadians(this.angle));
     this.dy = this.speed * Math.sin(toRadians(this.angle));
     
+    let oldX = this.x;
+    let oldY = this.y;
+
+    // Update position
     this.x += this.dx;
     this.y += this.dy;
+    
+    // Update rect position
+    this.rect.x = this.x;
+    this.rect.y = this.y;
 
-    // Collision + bounce
-    if (this.x < 0 || this.x > this.game.width - this.width) {
+    // Wall collision
+    if (this.x < 0 || this.x > this.game.width) {
       this.angle = 180 - this.angle;
     }
-
-    if (this.y < 0 || this.y > this.game.height - this.height) {
+    
+    if (this.y < 0 || this.y > this.game.height) {
       this.angle = 360 - this.angle;
     }
+
+    // Structure collision
+    this.game.structures.forEach(s => {
+      if (this.rect.collidesWith(s.rect)) {
+        this.handleCollision(this.rect.getCollisionFace(s.rect, oldX, oldY));
+      }
+    });
   }
 
   draw(ctx) {

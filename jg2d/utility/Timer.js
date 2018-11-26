@@ -2,7 +2,7 @@ class Timer {
   constructor(game) {
     this.game = game;
 
-    this.interval = 1000 / game.fps;
+    this.interval = 1000 / this.game.frameRate;
     this.then = Date.now();
     this.now, this.delta;
   }

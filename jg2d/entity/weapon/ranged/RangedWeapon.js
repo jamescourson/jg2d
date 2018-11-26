@@ -1,9 +1,12 @@
 class RangedWeapon {
-  constructor(fireRate, shotSpeed) {
+  constructor(player, fireRate, shotSpeed) {
     this.fireRate = fireRate;
     this.shotSpeed = shotSpeed;
     this.firing = false;
     this.elapsed = -1;
+
+    this.player = player;
+    this.game = this.player.game;
   }
 }
 

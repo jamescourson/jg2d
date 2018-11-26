@@ -1,9 +1,11 @@
 import Player from './entity/player/Player.js';
 import Timer from './utility/Timer.js';
 import Structure from './entity/structure/Structure.js';
+import Projectile from './entity/projectile/Projectile.js';
+import Rect from './obj/Rect.js';
 
 class Game {
-  constructor(width, height) {
+  constructor(width, height, frameRate = 60) {
     this.canvas = document.querySelector('#canvas');
     this.ctx = this.canvas.getContext('2d');
 
@@ -25,9 +27,10 @@ class Game {
 
     this.running = false;
     
-    this.fps = 60;
+    this.frameRate = 60;
     
     this.timer = new Timer(this);
+    this.rect = new Rect(0, 0, this.width, this.height);
   }
 
   toggleRunState() {
@@ -46,7 +49,7 @@ class Game {
 
   handleProjectiles() {
     this.players.forEach(p => {
-      let interval = this.fps / p.weapon.fireRate;
+      let interval = this.timer.interval / p.weapon.fireRate;
 
       // If not ready to fire, increase elapsed
       if (p.weapon.elapsed != -1) {
@@ -56,7 +59,7 @@ class Game {
       if (p.weapon.firing) {
         // Check elapsed and fire if ready
         if (p.weapon.elapsed >= interval || p.weapon.elapsed == -1) {
-          p.fireProjectile(this.projectiles);
+          this.projectiles.push(new Projectile(p, this));
           // Reset elapsed
           p.weapon.elapsed = 0;
         }
