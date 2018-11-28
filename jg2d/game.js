@@ -49,25 +49,35 @@ class Game {
 
   handleProjectiles() {
     this.players.forEach(p => {
-      let interval = this.timer.interval / p.weapon.fireRate;
+      let interval = this.timer.interval / p.activeWeapon.fireRate;
 
       // If not ready to fire, increase elapsed
-      if (p.weapon.elapsed != -1) {
-        p.weapon.elapsed++;
+      if (p.activeWeapon.elapsed != -1) {
+        p.activeWeapon.elapsed++;
       }
   
-      if (p.weapon.firing) {
+      if (p.activeWeapon.firing) {
         // Check elapsed and fire if ready
-        if (p.weapon.elapsed >= interval || p.weapon.elapsed == -1) {
-          this.projectiles.push(new Projectile(p, this));
+        if (p.activeWeapon.elapsed >= interval || p.activeWeapon.elapsed == -1) {
+          let offsetAngle = p.angle;
+          let offsetRange = Math.floor(Math.random() * p.activeWeapon.accuracy);
+
+          if (Math.round(Math.random()) == 1) {
+            offsetAngle += offsetRange;
+          } 
+          else {
+            offsetAngle -= offsetRange;
+          }
+
+          this.projectiles.push(new Projectile(p, this, offsetAngle));
           // Reset elapsed
-          p.weapon.elapsed = 0;
+          p.activeWeapon.elapsed = 0;
         }
       }
       else {
         // Reset elapsed if ready to fire
-        if (p.weapon.elapsed >= interval) {
-          p.weapon.elapsed = -1;
+        if (p.activeWeapon.elapsed >= interval) {
+          p.activeWeapon.elapsed = -1;
         }
       }
     });

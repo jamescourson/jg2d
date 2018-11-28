@@ -1,8 +1,7 @@
 import Entity from "../Entity.js";
-import Rect from "../../obj/Rect.js";
 
 class Projectile extends Entity {
-  constructor(player, game) {
+  constructor(player, game, angle) {
     super(player.x, player.y);
 
     this.player = player;
@@ -14,10 +13,10 @@ class Projectile extends Entity {
     this.rect = this.addRect(this.x, this.y, this.width, this.height);
 
     // angle - the projectile's direction
-    this.angle = player.angle;
+    this.angle = angle;
 
     // speed - projectile's speed
-    this.speed = player.weapon.shotSpeed;
+    this.speed = player.activeWeapon.shotSpeed;
   }
 
   handleCollision(axis) {

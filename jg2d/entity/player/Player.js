@@ -1,8 +1,7 @@
-import RangedWeapon from '../weapon/ranged/RangedWeapon.js';
 import Entity from '../Entity.js';
 
 class Player extends Entity {
-  constructor(x, y, game) {
+  constructor(x, y) {
     super(x, y);
 
     // angle - player's direction in deg
@@ -20,11 +19,26 @@ class Player extends Entity {
     // turnDir - the direction the player is turning
     this.turnDir = 0;
 
-    // game - parent game
-    this.game = game;
+    this.weapons = [];
+    this.activeWeapon;
+  }
 
-    // weapon - player's weapon
-    this.weapon = new RangedWeapon(this, 10, 10);
+  addRangedWeapon(weapon) {
+    let newWeapon = weapon;
+
+    if (this.weapons.push(newWeapon) == 1) {
+      this.activeWeapon = newWeapon;
+    }
+
+    return newWeapon;
+  }
+
+  setActiveWeapon(weapon) {
+    for (i in this.weapons) {
+      if (i == weapon) {
+        this.activeWeapon = i;
+      }
+    }
   }
 
   update() {
